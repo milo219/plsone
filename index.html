@@ -1,0 +1,101 @@
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Viewer (Full Page Zoom + Ruler + Upload)</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- libs -->
+  <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+  </script>
+</head>
+<body>
+  <div id="viewport">
+    <div id="page">
+      <!-- LEFT: controls -->
+      <div class="panel">
+        <h3>Controls</h3>
+        <div class="row">
+          <button id="btnZoomOut">Zoom −</button>
+          <button id="btnZoomIn">Zoom +</button>
+          <button id="btnZoomReset">Reset</button>
+        </div>
+        <div class="row">
+          <input id="zoomSlider" type="range" min="5" max="500" value="100">
+          <div class="muted"><span id="zoomLabel">100%</span></div>
+        </div>
+        <div class="row">
+          <label>Origin:</label>
+          <select id="originSel">
+            <option>Bottom-Right</option>
+            <option>Bottom-Left</option>
+            <option>Top-Right</option>
+            <option selected>Top-Left</option>
+            <option>Center</option>
+          </select>
+        </div>
+        <div class="row muted">Ctrl + / Ctrl − / Ctrl 0 juga bisa.</div>
+
+        <h3>Ruler</h3>
+        <div class="row">
+          <label>Step:</label>
+          <input type="number" id="ruler-step" value="10" min="1">
+        </div>
+        <div class="row">
+          <label>Scale:</label>
+          <input id="ruler-scale" type="range" min="50" max="200" value="100">
+          <div class="muted"><span id="ruler-scale-label">100%</span></div>
+        </div>
+        <div class="row">
+          <label>UI Scale:</label>
+          <input type="number" id="scale-denom" value="500" min="1">
+        </div>
+
+        <h3>Range</h3>
+        <div class="row">
+          <label>Min:</label>
+          <input type="number" id="min" value="600">
+        </div>
+        <div class="row">
+          <label>Max:</label>
+          <input type="number" id="max" value="700">
+        </div>
+        <div class="row">
+          <label>Target:</label>
+          <div style="display:flex; gap:8px;">
+            <input type="number" id="target" value="650">
+            <button id="btnGo">Go</button>
+          </div>
+        </div>
+
+        <h3>Upload</h3>
+        <div id="uploads" class="row">
+          <label>Upload Image A:
+            <input type="file" accept="image/*,.pdf" onchange="handleUpload(this)">
+          </label>
+          <label>Upload Image B:
+            <input type="file" accept="image/*,.pdf" onchange="handleUpload(this)">
+          </label>
+        </div>
+      </div>
+
+      <!-- RIGHT: ruler + canvas -->
+      <div id="stage-holder">
+        <canvas id="rulerCanvas"></canvas>
+        <div id="konvaHolder">
+          <div id="konvaContainer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- optional drag handle -->
+  <div id="handle" title="Drag to zoom"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

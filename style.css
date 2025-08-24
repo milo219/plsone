@@ -1,0 +1,74 @@
+:root { --panel-w: 360px; }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: #fafafa;
+}
+
+/* Scrollable viewport that contains the whole page (controls + ruler + canvas) */
+#viewport {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background: #fff;
+}
+
+/* Everything inside here scales together via CSS transform */
+#page {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  transform-origin: top left; /* set in JS too, default TL */
+  transform: scale(1);        /* updated by JS */
+}
+
+/* Left controls column */
+.panel {
+  width: var(--panel-w);
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+.panel h3 { margin: 10px 0 8px; }
+.row { margin: 10px 0; }
+.row label { display:block; font-size:14px; margin-bottom:6px; }
+input[type="number"], input[type="text"], select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+input[type="range"] { width: 100%; }
+button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+button + button { margin-left: 8px; }
+.muted { color: #666; font-size: 12px; }
+
+/* Stage area (ruler + konva) */
+#stage-holder { position: relative; }
+#rulerCanvas { position: absolute; left: 0; top: 0; background: #fff; }
+#konvaHolder  { position: absolute; top: 0; }
+#konvaContainer { position: relative; }
+
+/* Tiny optional drag handle (bottom-right) */
+#handle{
+  position: fixed;
+  right: 10px; bottom: 10px;
+  width: 16px; height: 16px;
+  border-radius: 4px;
+  background: #dfe3ea;
+  cursor: nwse-resize;
+  box-shadow: 0 0 0 1px #c8cdd6 inset;
+}
